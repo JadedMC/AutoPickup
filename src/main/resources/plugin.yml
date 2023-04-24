@@ -1,0 +1,7 @@
+name: AutoPickup
+version: '${project.version}'
+main: net.jadedmc.autopickup.AutoPickup
+api-version: 1.19
+authors: [JadedMC]
+description: Automatically Pick Up Items and Experience
+website: https://www.jadedmc.net
