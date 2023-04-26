@@ -4,6 +4,10 @@ AutoPickup:
   Fishing: true
   Mobs: true
 
+# Set if Auto Pickup should require permissions to use.
+# If true, requires the permission autopickup.use
+RequirePermission: false
+
 # Settings that control the inventory full notification.
 InventoryFull:
   # The message shown in chat when a player's inventory is full.

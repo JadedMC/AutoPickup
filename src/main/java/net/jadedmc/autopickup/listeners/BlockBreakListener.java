@@ -47,6 +47,11 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
+        // Exit if permissions are required and the player does not have them.
+        if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
+            return;
+        }
+
         // Give the player the dropped experience.
         player.giveExp(event.getExpToDrop());
         event.setExpToDrop(0);

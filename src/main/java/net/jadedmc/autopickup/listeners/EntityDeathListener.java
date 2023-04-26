@@ -49,6 +49,11 @@ public class EntityDeathListener implements Listener {
             return;
         }
 
+        // Exit if permissions are required and the player does not have them.
+        if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !killer.hasPermission("autopickup.use")) {
+            return;
+        }
+
         // Add dropped xp to the player.
         killer.giveExp(event.getDroppedExp());
         event.setDroppedExp(0);

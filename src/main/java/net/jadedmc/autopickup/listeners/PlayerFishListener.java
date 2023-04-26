@@ -49,6 +49,11 @@ public class PlayerFishListener implements Listener {
             return;
         }
 
+        // Exit if permissions are required and the player does not have them.
+        if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
+            return;
+        }
+
         // Get the ItemStack caught.
         ItemStack item = ((Item) event.getCaught()).getItemStack();
 
