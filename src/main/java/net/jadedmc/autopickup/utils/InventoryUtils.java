@@ -1,13 +1,26 @@
 package net.jadedmc.autopickup.utils;
 
-import org.bukkit.Bukkit;
+import net.jadedmc.autopickup.AutoPickup;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Useful Inventory utilities.
+ */
 public class InventoryUtils {
+    private static AutoPickup plugin;
+
+    /**
+     * Passes a plugin instance to the utility.
+     * @param pl Instance of the plugin.
+     */
+    public InventoryUtils(AutoPickup pl) {
+        plugin = pl;
+    }
 
     /**
      * Add items to a player's inventory.
@@ -27,6 +40,19 @@ public class InventoryUtils {
             }
 
             player.getInventory().addItem(item);
+        }
+
+        if(full) {
+
+            // Display the inventory full message.
+            if(plugin.getSettingsManager().getConfig().isSet("InventoryFull.Message")) {
+                ChatUtils.chat(player, plugin.getSettingsManager().getConfig().getString("InventoryFull.Message"));
+            }
+
+            // Play the inventory full sound.
+            if(plugin.getSettingsManager().getConfig().isSet("InventoryFull.Sound")) {
+                player.playSound(player.getLocation(), Sound.valueOf(plugin.getSettingsManager().getConfig().getString("InventoryFull.Sound")), 1, 1);
+            }
         }
 
         return remaining;

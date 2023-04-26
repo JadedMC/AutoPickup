@@ -1,0 +1,9 @@
+# Settings that control the inventory full notification.
+InventoryFull:
+  # The message shown in chat when a player's inventory is full.
+  Message: "&c&lYour Inventory Is Full!"
+
+  # Plays a sound when the inventory full message is shown.
+  # Full List of Sounds: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+  # Remove for no sound.
+  Sound: BLOCK_NOTE_BLOCK_HARP
