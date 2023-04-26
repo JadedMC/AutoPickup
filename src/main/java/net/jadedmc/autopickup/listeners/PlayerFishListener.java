@@ -1,5 +1,6 @@
 package net.jadedmc.autopickup.listeners;
 
+import net.jadedmc.autopickup.AutoPickup;
 import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -16,6 +17,15 @@ import java.util.Collections;
  * We use this to automatically add caught items to the player's inventory.
  */
 public class PlayerFishListener implements Listener {
+    private final AutoPickup plugin;
+
+    /**
+     * To be able to access the configuration files, we need to pass an instance of the plugin to our listener.
+     * @param plugin Instance of the plugin.
+     */
+    public PlayerFishListener(AutoPickup plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * Runs when the event is called.
@@ -31,6 +41,11 @@ public class PlayerFishListener implements Listener {
 
         // Makes sure the caught entity is an item.
         if(!(event.getCaught() instanceof Item)) {
+            return;
+        }
+
+        // Exit if auto pickup for fishing is disabled.
+        if(!plugin.getSettingsManager().getConfig().getBoolean("AutoPickup.Fishing")) {
             return;
         }
 

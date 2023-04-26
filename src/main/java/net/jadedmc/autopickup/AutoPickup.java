@@ -23,8 +23,8 @@ public final class AutoPickup extends JavaPlugin {
 
         // Register listeners
         getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
-        getServer().getPluginManager().registerEvents(new EntityDeathListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerFishListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
 
         // Pass plugin instance to InventoryUtils.
         new InventoryUtils(this);

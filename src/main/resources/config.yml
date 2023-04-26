@@ -1,6 +1,13 @@
+# Toggles which actions should automatically add items to a player's inventory.
+AutoPickup:
+  Blocks: true
+  Fishing: true
+  Mobs: true
+
 # Settings that control the inventory full notification.
 InventoryFull:
   # The message shown in chat when a player's inventory is full.
+  # You can use hex colors by using & and the hex code. Ex: &#FFFF00
   Message: "&c&lYour Inventory Is Full!"
 
   # Plays a sound when the inventory full message is shown.

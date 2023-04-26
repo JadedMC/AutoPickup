@@ -2,7 +2,6 @@ package net.jadedmc.autopickup.listeners;
 
 import net.jadedmc.autopickup.AutoPickup;
 import net.jadedmc.autopickup.utils.InventoryUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -40,6 +39,11 @@ public class BlockBreakListener implements Listener {
 
         // Ignore players in creative mode.
         if(player.getGameMode() == GameMode.CREATIVE) {
+            return;
+        }
+
+        // Exit if auto pickup for blocks is disabled.
+        if(!plugin.getSettingsManager().getConfig().getBoolean("AutoPickup.Blocks")) {
             return;
         }
 
