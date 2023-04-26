@@ -32,6 +32,9 @@ public final class AutoPickup extends JavaPlugin {
 
         // Pass plugin instance to InventoryUtils.
         new InventoryUtils(this);
+
+        // Enables bStats statistics tracking.
+        new Metrics(this, 18302);
     }
 
     /**
