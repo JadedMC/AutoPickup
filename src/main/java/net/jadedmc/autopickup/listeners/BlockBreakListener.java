@@ -3,6 +3,9 @@ package net.jadedmc.autopickup.listeners;
 import net.jadedmc.autopickup.AutoPickup;
 import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -12,6 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -82,5 +86,12 @@ public class BlockBreakListener implements Listener {
                 event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
             }
         }, 1);
+
+        // Process stacked crops, like bamboo, cactus, and sugar cane.
+        Collection<Material> crops = Arrays.asList(Material.BAMBOO, Material.CACTUS, Material.SUGAR_CANE);
+        Block above = event.getBlock().getRelative(BlockFace.UP);
+        if(crops.contains(event.getBlock().getType()) && crops.contains(above.getType())) {
+            player.breakBlock(above);
+        }
     }
 }
