@@ -5,3 +5,9 @@ api-version: 1.19
 authors: [JadedMC]
 description: Automatically Pick Up Items and Experience
 website: https://www.jadedmc.net
+
+commands:
+  autopickup:
+    description: AutoPickup plugin admin command.
+    aliases: [pickup,ap]
+    permission: autopickup.admin

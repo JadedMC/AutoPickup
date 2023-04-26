@@ -1,5 +1,6 @@
 package net.jadedmc.autopickup;
 
+import net.jadedmc.autopickup.commands.AutoPickupCMD;
 import net.jadedmc.autopickup.listeners.BlockBreakListener;
 import net.jadedmc.autopickup.listeners.EntityDeathListener;
 import net.jadedmc.autopickup.listeners.PlayerFishListener;
@@ -25,6 +26,9 @@ public final class AutoPickup extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
+
+        // Register commands
+        getCommand("autopickup").setExecutor(new AutoPickupCMD(this));
 
         // Pass plugin instance to InventoryUtils.
         new InventoryUtils(this);
