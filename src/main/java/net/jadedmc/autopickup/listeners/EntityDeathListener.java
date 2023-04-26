@@ -1,5 +1,6 @@
 package net.jadedmc.autopickup.listeners;
 
+import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,8 +33,8 @@ public class EntityDeathListener implements Listener {
         Collection<ItemStack> drops = new ArrayList<>(event.getDrops());
         event.getDrops().clear();
 
-        for(ItemStack drop : drops) {
-            killer.getInventory().addItem(drop);
-        }
+
+        Collection<ItemStack> remaining = InventoryUtils.addItems(killer, drops);
+        event.getDrops().addAll(remaining);
     }
 }
