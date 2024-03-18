@@ -36,15 +36,6 @@ public class PlayerFishListener implements Listener {
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        // Give the player the dropped experience.
-        player.giveExp(event.getExpToDrop());
-        event.setExpToDrop(0);
-
-        // Makes sure the caught entity is an item.
-        if(!(event.getCaught() instanceof Item)) {
-            return;
-        }
-
         // Exit if auto pickup for fishing is disabled.
         if(!plugin.getSettingsManager().getConfig().getBoolean("AutoPickup.Fishing")) {
             return;
@@ -52,6 +43,15 @@ public class PlayerFishListener implements Listener {
 
         // Exit if permissions are required and the player does not have them.
         if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
+            return;
+        }
+
+        // Give the player the dropped experience.
+        player.giveExp(event.getExpToDrop());
+        event.setExpToDrop(0);
+
+        // Makes sure the caught entity is an item.
+        if(!(event.getCaught() instanceof Item)) {
             return;
         }
 
