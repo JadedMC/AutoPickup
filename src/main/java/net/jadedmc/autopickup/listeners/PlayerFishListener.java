@@ -2,6 +2,7 @@ package net.jadedmc.autopickup.listeners;
 
 import net.jadedmc.autopickup.AutoPickup;
 import net.jadedmc.autopickup.utils.InventoryUtils;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -46,27 +48,35 @@ public class PlayerFishListener implements Listener {
             return;
         }
 
-        // Give the player the dropped experience.
-        player.giveExp(event.getExpToDrop());
-        event.setExpToDrop(0);
-
         // Makes sure the caught entity is an item.
         if(!(event.getCaught() instanceof Item)) {
             return;
         }
 
-        // Get the ItemStack caught.
-        ItemStack item = ((Item) event.getCaught()).getItemStack();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            Collection<ItemStack> drops = new ArrayList<>();
 
-        // Delete the item entity that was caught.
-        event.getCaught().remove();
+            // Loop through all nearby entities to check for item entities.
+            for(Entity entity : event.getCaught().getWorld().getNearbyEntities(event.getCaught().getLocation(), 1, 1,1)) {
 
-        // Adds the item caught to the player's inventory.
-        Collection<ItemStack> remaining = InventoryUtils.addItems(player, Collections.singletonList(item));
+                // Skip any that aren't items.
+                if(!(entity instanceof Item)) {
+                    continue;
+                }
 
-        // Respawn any items that do not fit in the player's inventory.
-        for(ItemStack itemStack : remaining) {
-            player.getLocation().getWorld().dropItemNaturally(player.getLocation(), itemStack);
-        }
+                // Add the item to the dropped items collection.
+                ItemStack item = ((Item) entity).getItemStack();
+                drops.add(item);
+                entity.remove();
+            }
+
+            // Add the dropped items to the player's inventory.
+            Collection<ItemStack> remaining = InventoryUtils.addItems(player, drops);
+
+            // Respawn any items that do not fit in the player's inventory.
+            for(ItemStack drop : remaining) {
+                player.getLocation().getWorld().dropItemNaturally(player.getLocation(), drop);
+            }
+        }, 1);
     }
 }
