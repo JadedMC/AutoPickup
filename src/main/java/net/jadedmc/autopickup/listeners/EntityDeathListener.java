@@ -4,6 +4,7 @@ import net.jadedmc.autopickup.AutoPickup;
 import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +31,7 @@ public class EntityDeathListener implements Listener {
      * Runs when the event is called.
      * @param event EntityDeathEvent.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDeath(EntityDeathEvent event) {
         Player killer = event.getEntity().getKiller();
 

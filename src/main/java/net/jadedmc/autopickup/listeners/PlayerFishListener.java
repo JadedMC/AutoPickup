@@ -5,6 +5,7 @@ import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +32,7 @@ public class PlayerFishListener implements Listener {
      * Runs when the event is called.
      * @param event PlayerFishEvent.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
 
