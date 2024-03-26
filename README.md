@@ -1,12 +1,11 @@
-<img alt="banner" src="https://www.jadedmc.net/plugins/AutoPickup/images/AutoPickup%20Banner.png" style="display: block; margin-left: auto; margin-right: auto; width: 95%;">
+<img alt="banner" src="https://www.jadedmc.net/plugins/AutoPickup/images/AutoPickup%20Banner.png" style="display: block; margin-left: auto; margin-right: auto; width: 100%;">
 <br/>
-
 <center>
 <a href="https://modrinth.com/plugin/jmc-autopickup"><img alt="modrinth" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg"></a>
 <a href="https://www.spigotmc.org/resources/autopickup.112364/"><img alt="spigot" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/spigot_vector.svg"></a>
 <a href="https://hangar.papermc.io/JadedMC/JAutoPickup"><img alt="hangar" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/hangar_vector.svg"></a>
 </center>
-
+<br/>
 AutoPickup is a simple plugin that will automatically send items to players' inventories when mining, killing mobs, and fishing.
 
 ## Features
