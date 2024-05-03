@@ -1,6 +1,30 @@
+/*
+ * This file is part of AutoPickup, licensed under the MIT License.
+ *
+ *  Copyright (c) JadedMC
+ *  Copyright (c) contributors
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in all
+ *  copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *  SOFTWARE.
+ */
 package net.jadedmc.autopickup.listeners;
 
-import net.jadedmc.autopickup.AutoPickup;
+import net.jadedmc.autopickup.AutoPickupPlugin;
 import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -24,13 +48,13 @@ import java.util.Collection;
  * We use this to automatically add block drops to the player's inventory.
  */
 public class BlockBreakListener implements Listener {
-    private final AutoPickup plugin;
+    private final AutoPickupPlugin plugin;
 
     /**
      * To be able to access the configuration files, we need to pass an instance of the plugin to our listener.
      * @param plugin Instance of the plugin.
      */
-    public BlockBreakListener(AutoPickup plugin) {
+    public BlockBreakListener(AutoPickupPlugin plugin) {
         this.plugin = plugin;
     }
 
