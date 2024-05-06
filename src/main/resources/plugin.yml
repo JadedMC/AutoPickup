@@ -1,6 +1,6 @@
 name: AutoPickup
 version: '${project.version}'
-main: net.jadedmc.autopickup.AutoPickup
+main: net.jadedmc.autopickup.AutoPickupPlugin
 api-version: 1.19
 authors: [JadedMC]
 description: Automatically Pick Up Items and Experience
