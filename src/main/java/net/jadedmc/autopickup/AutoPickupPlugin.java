@@ -30,6 +30,7 @@ import net.jadedmc.autopickup.listeners.EntityDeathListener;
 import net.jadedmc.autopickup.listeners.PlayerFishListener;
 import net.jadedmc.autopickup.utils.ChatUtils;
 import net.jadedmc.autopickup.utils.InventoryUtils;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
