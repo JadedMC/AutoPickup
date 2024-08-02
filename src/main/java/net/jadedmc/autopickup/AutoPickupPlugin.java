@@ -28,6 +28,7 @@ import net.jadedmc.autopickup.commands.AutoPickupCMD;
 import net.jadedmc.autopickup.listeners.BlockBreakListener;
 import net.jadedmc.autopickup.listeners.EntityDeathListener;
 import net.jadedmc.autopickup.listeners.PlayerFishListener;
+import net.jadedmc.autopickup.utils.ChatUtils;
 import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,6 +44,9 @@ public final class AutoPickupPlugin extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        // Setup ChatUtils.
+        ChatUtils.initialize(this);
+
         // Load config.yml
         settingsManager = new SettingsManager(this);
 
@@ -59,6 +63,11 @@ public final class AutoPickupPlugin extends JavaPlugin {
 
         // Enables bStats statistics tracking.
         new Metrics(this, 18302);
+    }
+
+    @Override
+    public void onDisable() {
+        ChatUtils.disable();
     }
 
     /**

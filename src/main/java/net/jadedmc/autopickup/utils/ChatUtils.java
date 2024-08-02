@@ -24,46 +24,115 @@
  */
 package net.jadedmc.autopickup.utils;
 
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A collection of chat-related utilities to make working with colored and formatted strings easier.
+ * A collection of chat-related utility methods.
  */
 public class ChatUtils {
+    private static BukkitAudiences adventure;
 
     /**
-     * A quicker way to send colored messages to a command sender.
-     * @param sender Command Sender
-     * @param message Message to be sent.
+     * Creates an instance of adventure using an instance of the plugin.
+     * Called when the plugin is enabled.
+     * @param plugin Instance of the plugin.
      */
-    public static void chat(CommandSender sender, String message) {
-        sender.sendMessage(translate(message));
+    public static void initialize(@NotNull final Plugin plugin) {
+        adventure = BukkitAudiences.create(plugin);
     }
 
     /**
-     * Translate a String to a colorful String.
+     * Sets the instance of adventure to null when called.
+     * Called when the plugin is disabled to prevent potential memory leaks.
+     */
+    public static void disable() {
+        if(adventure != null) {
+            adventure.close();
+            adventure = null;
+        }
+    }
+
+    /**
+     * A quick way to send a CommandSender a colored message.
+     * @param sender CommandSender to send message to.
+     * @param message The message being sent.
+     */
+    public static void chat(@NotNull final CommandSender sender, @NotNull final String message) {
+        adventure.sender(sender).sendMessage(translate(message));
+    }
+
+    /**
+     * A quick way to send a Player a colored message.
+     * Supports PlaceholderAPI placeholders if installed.
+     * @param player Player to send message to.
+     * @param message The message being sent.
+     */
+    public static void chat(@NotNull final Player player, @NotNull final String message) {
+        // Sends the message to the player.
+        adventure.sender(player).sendMessage(translate(message));
+    }
+
+    /**
+     * Translates a String to a colorful String using methods in the BungeeCord API.
      * @param message Message to translate.
      * @return Translated Message.
      */
-    public static String translate(String message) {
-        // Get the server version.
-        int subVersion = VersionUtils.getServerVersion();
+    public static Component translate(@NotNull final String message) {
+        return MiniMessage.miniMessage().deserialize(replaceLegacy(message));
+    }
 
-        // If the server is 1.16 or later, allows hex color codes.
-        if(subVersion >= 16) {
-            Pattern pattern = Pattern.compile("&#[a-fA-F0-9]{6}");
+    /**
+     * Replaces the legacy color codes used in a message with their MiniMessage counterparts.
+     * @param message Message to replace color codes in.
+     * @return Message with the color codes replaced.
+     */
+    public static String replaceLegacy(@NotNull String message) {
+        // If the version is 1.16 or greater, check for hex color codes.
+        if(VersionUtils.getServerVersion() >= 16) {
+            final Pattern pattern = Pattern.compile("&#[a-fA-F0-9]{6}");
             Matcher matcher = pattern.matcher(message);
 
             while (matcher.find()) {
-                String color = message.substring(matcher.start() + 1, matcher.end());
-                message = message.replace("&" + color, ChatColor.of(color) + "");
+                final String color = message.substring(matcher.start() + 1, matcher.end());
+                message = message.replace("&" + color, "<reset><color:" + color + ">");
                 matcher = pattern.matcher(message);
             }
         }
-        return ChatColor.translateAlternateColorCodes('&', message);
+
+        // Then replace legacy color codes.
+        return message
+                .replace("\\n", "<newline>")
+                .replace("§", "&")
+                .replace("&0", "<reset><black>")
+                .replace("&1", "<reset><dark_blue>")
+                .replace("&2", "<reset><dark_green>")
+                .replace("&3", "<reset><dark_aqua>")
+                .replace("&4", "<reset><dark_red>")
+                .replace("&5", "<reset><dark_purple>")
+                .replace("&6", "<reset><gold>")
+                .replace("&7", "<reset><gray>")
+                .replace("&8", "<reset><dark_gray>")
+                .replace("&9", "<reset><blue>")
+                .replace("&a", "<reset><green>")
+                .replace("&b", "<reset><aqua>")
+                .replace("&c", "<reset><red>")
+                .replace("&d", "<reset><light_purple>")
+                .replace("&e", "<reset><yellow>")
+                .replace("&f", "<reset><white>")
+                .replace("&k", "<obfuscated>")
+                .replace("&l", "<bold>")
+                .replace("&m", "<strikethrough>")
+                .replace("&n", "<u>")
+                .replace("&o", "<i>")
+                .replace("&r", "<reset>");
     }
 }
