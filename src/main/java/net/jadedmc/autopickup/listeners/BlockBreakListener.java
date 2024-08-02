@@ -81,10 +81,6 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
-        // Give the player the dropped experience.
-        player.giveExp(event.getExpToDrop());
-        event.setExpToDrop(0);
-
         // There is no way to modify drops, so to support custom drops, checks all dropped item entities 1 tick after the event.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             Collection<ItemStack> drops = new ArrayList<>();

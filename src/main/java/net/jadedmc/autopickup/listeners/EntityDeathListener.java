@@ -79,10 +79,6 @@ public class EntityDeathListener implements Listener {
             return;
         }
 
-        // Add dropped xp to the player.
-        killer.giveExp(event.getDroppedExp());
-        event.setDroppedExp(0);
-
         // Clear the list of dropped items.
         Collection<ItemStack> drops = new ArrayList<>(event.getDrops());
         event.getDrops().clear();
