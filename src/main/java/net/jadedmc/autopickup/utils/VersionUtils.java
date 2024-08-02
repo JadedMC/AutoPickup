@@ -30,6 +30,7 @@ import org.bukkit.Bukkit;
  * A collection of utilities related to the version of the server.
  */
 public class VersionUtils {
+    private static int version = -1;
 
     /**
      * Return the major Minecraft version the server is running.
@@ -37,7 +38,14 @@ public class VersionUtils {
      * @return Server's major version.
      */
     public static int getServerVersion() {
-        String version = Bukkit.getServer().getBukkitVersion().split("-")[0];
-        return Integer.parseInt(version.split("\\.")[1]);
+        // Prevent calculating the server version repeatedly.
+        if(version != -1) {
+            return version;
+        }
+
+        // Sets the server version if not set yet.
+        final String versionString = Bukkit.getServer().getBukkitVersion().split("-")[0];
+        version = Integer.parseInt(versionString.split("\\.")[1]);
+        return version;
     }
 }
