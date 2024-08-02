@@ -44,8 +44,9 @@ public final class AutoPickupPlugin extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        // Setup ChatUtils.
+        // Setup utilities.
         ChatUtils.initialize(this);
+        InventoryUtils.initialize(this);
 
         // Load config.yml
         settingsManager = new SettingsManager(this);
@@ -58,15 +59,16 @@ public final class AutoPickupPlugin extends JavaPlugin {
         // Register commands
         getCommand("autopickup").setExecutor(new AutoPickupCMD(this));
 
-        // Pass plugin instance to InventoryUtils.
-        new InventoryUtils(this);
-
         // Enables bStats statistics tracking.
         new Metrics(this, 18302);
     }
 
+    /**
+     * Runs when the plugin is disabled.
+     */
     @Override
     public void onDisable() {
+        // Disables adventure to prevent memory leaks.
         ChatUtils.disable();
     }
 

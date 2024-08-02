@@ -28,6 +28,7 @@ import net.jadedmc.autopickup.AutoPickupPlugin;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,10 +40,10 @@ public class InventoryUtils {
     private static AutoPickupPlugin plugin;
 
     /**
-     * Passes a plugin instance to the utility.
+     * Sets up the Inventory Utilities.
      * @param pl Instance of the plugin.
      */
-    public InventoryUtils(AutoPickupPlugin pl) {
+    public static void initialize(@NotNull final AutoPickupPlugin pl) {
         plugin = pl;
     }
 
@@ -52,11 +53,11 @@ public class InventoryUtils {
      * @param items Collection of items to add.
      * @return Collection of items that did not fit.
      */
-    public static Collection<ItemStack> addItems(Player player, Collection<ItemStack> items) {
-        Collection<ItemStack> remaining = new ArrayList<>();
+    public static Collection<ItemStack> addItems(@NotNull final Player player, @NotNull final Collection<ItemStack> items) {
+        final Collection<ItemStack> remaining = new ArrayList<>();
         boolean full = false;
 
-        for(ItemStack item : items) {
+        for(final ItemStack item : items) {
             if(hasFullInventory(player)) {
                 full = true;
                 remaining.add(item);
