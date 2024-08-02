@@ -32,6 +32,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +48,7 @@ public class EntityDeathListener implements Listener {
      * To be able to access the configuration files, we need to pass an instance of the plugin to our listener.
      * @param plugin Instance of the plugin.
      */
-    public EntityDeathListener(AutoPickupPlugin plugin) {
+    public EntityDeathListener(@NotNull final AutoPickupPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -57,7 +58,7 @@ public class EntityDeathListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDeath(EntityDeathEvent event) {
-        Player killer = event.getEntity().getKiller();
+        final Player killer = event.getEntity().getKiller();
 
         // Makes sure the killer is still online.
         if(killer == null) {
@@ -80,11 +81,11 @@ public class EntityDeathListener implements Listener {
         }
 
         // Clear the list of dropped items.
-        Collection<ItemStack> drops = new ArrayList<>(event.getDrops());
+        final Collection<ItemStack> drops = new ArrayList<>(event.getDrops());
         event.getDrops().clear();
 
         // Adds the item caught to the player's inventory.
-        Collection<ItemStack> remaining = InventoryUtils.addItems(killer, drops);
+        final Collection<ItemStack> remaining = InventoryUtils.addItems(killer, drops);
 
         // Drops all items that could not fit in the player's inventory.
         event.getDrops().addAll(remaining);

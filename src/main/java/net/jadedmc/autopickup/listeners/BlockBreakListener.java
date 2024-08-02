@@ -38,6 +38,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +55,7 @@ public class BlockBreakListener implements Listener {
      * To be able to access the configuration files, we need to pass an instance of the plugin to our listener.
      * @param plugin Instance of the plugin.
      */
-    public BlockBreakListener(AutoPickupPlugin plugin) {
+    public BlockBreakListener(@NotNull final AutoPickupPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -63,8 +64,8 @@ public class BlockBreakListener implements Listener {
      * @param event BlockBreakEvent.
      */
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onBlockBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
+    public void onBlockBreak(@NotNull final BlockBreakEvent event) {
+        final Player player = event.getPlayer();
 
         // Ignore players in creative mode.
         if(player.getGameMode() == GameMode.CREATIVE) {
@@ -83,10 +84,10 @@ public class BlockBreakListener implements Listener {
 
         // There is no way to modify drops, so to support custom drops, checks all dropped item entities 1 tick after the event.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            Collection<ItemStack> drops = new ArrayList<>();
+            final Collection<ItemStack> drops = new ArrayList<>();
 
             // Loop through all nearby entities to check for item entities.
-            for(Entity entity : event.getBlock().getWorld().getNearbyEntities(event.getBlock().getLocation(), 1, 1,1)) {
+            for(final Entity entity : event.getBlock().getWorld().getNearbyEntities(event.getBlock().getLocation(), 1, 1,1)) {
 
                 // Skip any that aren't items.
                 if(!(entity instanceof Item)) {
@@ -94,23 +95,23 @@ public class BlockBreakListener implements Listener {
                 }
 
                 // Add the item to the dropped items collection.
-                ItemStack item = ((Item) entity).getItemStack();
+                final ItemStack item = ((Item) entity).getItemStack();
                 drops.add(item);
                 entity.remove();
             }
 
             // Add the dropped items to the player's inventory.
-            Collection<ItemStack> remaining = InventoryUtils.addItems(player, drops);
+            final Collection<ItemStack> remaining = InventoryUtils.addItems(player, drops);
 
             // Respawn any items that do not fit in the player's inventory.
-            for(ItemStack drop : remaining) {
+            for(final ItemStack drop : remaining) {
                 event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
             }
         }, 1);
 
         // Process stacked crops, like bamboo, cactus, and sugar cane.
-        Collection<Material> crops = Arrays.asList(Material.BAMBOO, Material.CACTUS, Material.SUGAR_CANE);
-        Block above = event.getBlock().getRelative(BlockFace.UP);
+        final Collection<Material> crops = Arrays.asList(Material.BAMBOO, Material.CACTUS, Material.SUGAR_CANE);
+        final Block above = event.getBlock().getRelative(BlockFace.UP);
         if(crops.contains(event.getBlock().getType()) && crops.contains(above.getType())) {
             player.breakBlock(above);
         }

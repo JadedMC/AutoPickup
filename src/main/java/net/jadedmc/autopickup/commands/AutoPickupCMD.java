@@ -31,6 +31,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
      * To be able to access the configuration files, we need to pass an instance of the plugin to our listener.
      * @param plugin Instance of the plugin.
      */
-    public AutoPickupCMD(AutoPickupPlugin plugin) {
+    public AutoPickupCMD(final AutoPickupPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -56,7 +57,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
      * @return If the command was successful.
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, @NotNull String[] args) {
 
         // Makes sure the command has an argument.
         if(args.length == 0) {
@@ -64,7 +65,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
         }
 
         // Get the sub command used.
-        String subCommand = args[0].toLowerCase();
+        final String subCommand = args[0].toLowerCase();
 
         switch (subCommand) {
 
@@ -98,7 +99,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
      * @return Tab completion.
      */
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, @NotNull final String[] args) {
         // Makes sure the sender is a player.
         // Required to process regions.
         if(!(sender instanceof Player)) {
