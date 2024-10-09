@@ -14,6 +14,7 @@ AutoPickup is a simple plugin that will automatically send items to players' inv
 * Customizable Inventory Full Message.
 * Ability to toggle on/off auto pickup for different gathering methods.
 * Support for crops like sugar cane, cactus, and bamboo.
+* BetterReload support
 
 <p align="center">
     <img alt="plugin being used" src="https://www.jadedmc.net/plugins/AutoPickup/images/Usage.gif" style="display: block; margin-left: auto; margin-right: auto;">

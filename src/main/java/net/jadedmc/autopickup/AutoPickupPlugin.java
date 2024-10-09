@@ -28,6 +28,7 @@ import net.jadedmc.autopickup.commands.AutoPickupCMD;
 import net.jadedmc.autopickup.listeners.BlockBreakListener;
 import net.jadedmc.autopickup.listeners.EntityDeathListener;
 import net.jadedmc.autopickup.listeners.PlayerFishListener;
+import net.jadedmc.autopickup.listeners.ReloadListener;
 import net.jadedmc.autopickup.utils.ChatUtils;
 import net.jadedmc.autopickup.utils.InventoryUtils;
 import org.bstats.bukkit.Metrics;
@@ -38,6 +39,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * It links all parts together and registers them with the server.
  */
 public final class AutoPickupPlugin extends JavaPlugin {
+    private HookManager hookManager;
     private SettingsManager settingsManager;
 
     /**
@@ -51,11 +53,15 @@ public final class AutoPickupPlugin extends JavaPlugin {
 
         // Load config.yml
         settingsManager = new SettingsManager(this);
+        hookManager = new HookManager(this);
 
         // Register listeners
         getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
+
+        // Supports BetterReload if installed.
+        if(this.hookManager.useBetterReload()) getServer().getPluginManager().registerEvents(new ReloadListener(this), this);
 
         // Register commands
         getCommand("autopickup").setExecutor(new AutoPickupCMD(this));
@@ -71,6 +77,14 @@ public final class AutoPickupPlugin extends JavaPlugin {
     public void onDisable() {
         // Disables adventure to prevent memory leaks.
         ChatUtils.disable();
+    }
+
+    /**
+     * Get the Hook Manager, which returns an object that keeps track of hooks into other plugins.
+     * @return HookManager.
+     */
+    public HookManager getHookManager() {
+        return this.hookManager;
     }
 
     /**

@@ -6,6 +6,9 @@ authors: [JadedMC]
 description: Automatically Pick Up Items and Experience
 website: https://www.jadedmc.net
 
+softdepend:
+  - BetterReload
+
 commands:
   autopickup:
     description: AutoPickup plugin admin command.
