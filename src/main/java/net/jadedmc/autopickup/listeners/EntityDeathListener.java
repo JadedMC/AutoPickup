@@ -71,12 +71,12 @@ public class EntityDeathListener implements Listener {
         }
 
         // Exit if auto pickup for mobs is disabled.
-        if(!plugin.getSettingsManager().getConfig().getBoolean("AutoPickup.Mobs")) {
+        if(!plugin.getConfigManager().getConfig().getBoolean("AutoPickup.Mobs")) {
             return;
         }
 
         // Exit if permissions are required and the player does not have them.
-        if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !killer.hasPermission("autopickup.use")) {
+        if(plugin.getConfigManager().getConfig().getBoolean("RequirePermission") && !killer.hasPermission("autopickup.use")) {
             return;
         }
 

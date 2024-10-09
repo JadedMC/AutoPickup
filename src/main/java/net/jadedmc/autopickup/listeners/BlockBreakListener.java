@@ -73,12 +73,12 @@ public class BlockBreakListener implements Listener {
         }
 
         // Exit if auto pickup for blocks is disabled.
-        if(!plugin.getSettingsManager().getConfig().getBoolean("AutoPickup.Blocks")) {
+        if(!plugin.getConfigManager().getConfig().getBoolean("AutoPickup.Blocks")) {
             return;
         }
 
         // Exit if permissions are required and the player does not have them.
-        if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
+        if(plugin.getConfigManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
             return;
         }
 

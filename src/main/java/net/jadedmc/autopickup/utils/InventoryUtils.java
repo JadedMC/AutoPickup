@@ -70,13 +70,13 @@ public class InventoryUtils {
         if(full) {
 
             // Display the inventory full message.
-            if(plugin.getSettingsManager().getConfig().isSet("InventoryFull.Message")) {
-                ChatUtils.chat(player, plugin.getSettingsManager().getConfig().getString("InventoryFull.Message"));
+            if(plugin.getConfigManager().getConfig().isSet("InventoryFull.Message")) {
+                ChatUtils.chat(player, plugin.getConfigManager().getConfig().getString("InventoryFull.Message"));
             }
 
             // Play the inventory full sound.
-            if(plugin.getSettingsManager().getConfig().isSet("InventoryFull.Sound")) {
-                player.playSound(player.getLocation(), Sound.valueOf(plugin.getSettingsManager().getConfig().getString("InventoryFull.Sound")), 1, 1);
+            if(plugin.getConfigManager().getConfig().isSet("InventoryFull.Sound")) {
+                player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfigManager().getConfig().getString("InventoryFull.Sound")), 1, 1);
             }
         }
 

@@ -40,7 +40,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class AutoPickupPlugin extends JavaPlugin {
     private HookManager hookManager;
-    private SettingsManager settingsManager;
+    private ConfigManager configManager;
 
     /**
      * Runs when the server is started.
@@ -52,7 +52,7 @@ public final class AutoPickupPlugin extends JavaPlugin {
         InventoryUtils.initialize(this);
 
         // Load config.yml
-        settingsManager = new SettingsManager(this);
+        configManager = new ConfigManager(this);
         hookManager = new HookManager(this);
 
         // Register listeners
@@ -80,6 +80,14 @@ public final class AutoPickupPlugin extends JavaPlugin {
     }
 
     /**
+     * Gets the current settings manager instance.
+     * @return Config Manager.
+     */
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    /**
      * Get the Hook Manager, which returns an object that keeps track of hooks into other plugins.
      * @return HookManager.
      */
@@ -88,17 +96,9 @@ public final class AutoPickupPlugin extends JavaPlugin {
     }
 
     /**
-     * Gets the current settings manager instance.
-     * @return Settings Manager.
-     */
-    public SettingsManager getSettingsManager() {
-        return settingsManager;
-    }
-
-    /**
      * Reloads the plugin configuration and updates important values.
      */
     public void reload() {
-        this.settingsManager.reloadConfig();
+        this.configManager.reloadConfig();
     }
 }

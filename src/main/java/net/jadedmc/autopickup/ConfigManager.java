@@ -35,7 +35,7 @@ import java.io.IOException;
 /**
  * Manages the configurable settings in the plugin.
  */
-public class SettingsManager {
+public class ConfigManager {
     private FileConfiguration config;
     private final File configFile;
 
@@ -43,7 +43,7 @@ public class SettingsManager {
      * Loads or Creates configuration files.
      * @param plugin Instance of the plugin.
      */
-    public SettingsManager(@NotNull final Plugin plugin) {
+    public ConfigManager(@NotNull final Plugin plugin) {
         configFile = new File(plugin.getDataFolder(), "config.yml");
         if(!configFile.exists()) {
             plugin.saveResource("config.yml", false);

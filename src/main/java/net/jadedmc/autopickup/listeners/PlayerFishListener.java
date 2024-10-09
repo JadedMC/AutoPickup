@@ -63,12 +63,12 @@ public class PlayerFishListener implements Listener {
         final Player player = event.getPlayer();
 
         // Exit if auto pickup for fishing is disabled.
-        if(!plugin.getSettingsManager().getConfig().getBoolean("AutoPickup.Fishing")) {
+        if(!plugin.getConfigManager().getConfig().getBoolean("AutoPickup.Fishing")) {
             return;
         }
 
         // Exit if permissions are required and the player does not have them.
-        if(plugin.getSettingsManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
+        if(plugin.getConfigManager().getConfig().getBoolean("RequirePermission") && !player.hasPermission("autopickup.use")) {
             return;
         }
 
