@@ -94,4 +94,11 @@ public final class AutoPickupPlugin extends JavaPlugin {
     public SettingsManager getSettingsManager() {
         return settingsManager;
     }
+
+    /**
+     * Reloads the plugin configuration and updates important values.
+     */
+    public void reload() {
+        this.settingsManager.reloadConfig();
+    }
 }

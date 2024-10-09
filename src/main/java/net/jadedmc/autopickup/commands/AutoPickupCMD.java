@@ -44,7 +44,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
      * To be able to access the configuration files, we need to pass an instance of the plugin to our listener.
      * @param plugin Instance of the plugin.
      */
-    public AutoPickupCMD(final AutoPickupPlugin plugin) {
+    public AutoPickupCMD(@NotNull final AutoPickupPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -71,7 +71,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
 
             // Reloads all plugin configuration files.
             case "reload":
-                plugin.getSettingsManager().reload();
+                plugin.reload();
                 ChatUtils.chat(sender, "&a&lAutoPickup &8» &aConfiguration file reloaded successfully!");
                 return true;
 
