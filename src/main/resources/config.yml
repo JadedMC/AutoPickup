@@ -4,6 +4,11 @@ AutoPickup:
   Fishing: true
   Mobs: true
 
+# Toggle true if you want to open automatic cook.
+# This feature requires the permission autopickup.use.autocook
+Settings:
+  auto-cook: true
+
 # Set if Auto Pickup should require permissions to use.
 # If true, requires the permission autopickup.use
 RequirePermission: false
