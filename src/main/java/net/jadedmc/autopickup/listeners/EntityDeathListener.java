@@ -89,19 +89,18 @@ public class EntityDeathListener implements Listener {
 
         // if auto-cook is enabled, all items are cooked and given to the player.
         if (plugin.getConfigManager().getConfig().getBoolean("Settings.auto-cook")){
-            if (plugin.getConfigManager().getConfig().getBoolean("RequirePermission") && !killer.hasPermission("autopickup.use.autocook")){
-                return;
+            if (plugin.getConfigManager().getConfig().getBoolean("RequirePermission") && killer.hasPermission("autopickup.use.autocook")){
+                List<ItemStack> drop = new ArrayList<>(drops);
+                drop.replaceAll(itemStack -> {
+                    Material cookedMaterial = FoodUtils.getCookedVersion(itemStack.getType());
+                    if (cookedMaterial != null) {
+                        return new ItemStack(cookedMaterial, itemStack.getAmount());
+                    }
+                    return itemStack;
+                });
+                drops.clear();
+                drops.addAll(drop);
             }
-            List<ItemStack> drop = new ArrayList<>(drops);
-            drop.replaceAll(itemStack -> {
-                Material cookedMaterial = FoodUtils.getCookedVersion(itemStack.getType());
-                if (cookedMaterial != null) {
-                    return new ItemStack(cookedMaterial, itemStack.getAmount());
-                }
-                return itemStack;
-            });
-            drops.clear();
-            drops.addAll(drop);
         }
 
         // Adds the item caught to the player's inventory.
