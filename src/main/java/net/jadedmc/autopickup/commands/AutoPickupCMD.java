@@ -78,6 +78,7 @@ public class AutoPickupCMD implements CommandExecutor, TabCompleter {
             // Displays the plugin version.
             case "version":
             case "ver":
+            case "v":
                 ChatUtils.chat(sender, "&a&lAutoPickup &8» &aCurrent version: &f" + plugin.getDescription().getVersion());
                 return true;
 
