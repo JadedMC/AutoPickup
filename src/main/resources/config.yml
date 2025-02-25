@@ -18,3 +18,8 @@ InventoryFull:
   # Full List of Sounds: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
   # Remove for no sound.
   Sound: BLOCK_NOTE_BLOCK_HARP
+
+# These are items that the plugin will ignore when auto pickup is enabled.
+# Full List of Items: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+Blacklist:
+  - BEDROCK

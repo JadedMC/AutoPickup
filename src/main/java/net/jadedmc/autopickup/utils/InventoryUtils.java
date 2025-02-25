@@ -25,6 +25,7 @@
 package net.jadedmc.autopickup.utils;
 
 import net.jadedmc.autopickup.AutoPickupPlugin;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -57,7 +58,16 @@ public class InventoryUtils {
         final Collection<ItemStack> remaining = new ArrayList<>();
         boolean full = false;
 
+        final Collection<Material> blacklist = plugin.getConfigManager().getBlacklistedItems();
+
         for(final ItemStack item : items) {
+
+            // Skip blacklisted items.
+            if(blacklist.contains(item.getType())) {
+                remaining.add(item);
+                continue;
+            }
+
             if(hasFullInventory(player)) {
                 full = true;
                 remaining.add(item);

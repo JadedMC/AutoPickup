@@ -24,6 +24,7 @@
  */
 package net.jadedmc.autopickup;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -31,6 +32,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Manages the configurable settings in the plugin.
@@ -49,6 +53,27 @@ public class ConfigManager {
             plugin.saveResource("config.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
+    }
+
+    /**
+     * Gets a Collection of configured items that the plugin should ignore.
+     * Returns an empty collection if not configured.
+     * @return Collection of ignored Materials.
+     */
+    public Collection<Material> getBlacklistedItems() {
+        final Collection<Material> items = new HashSet<>();
+
+        // Return an empty list if the section is missing from the config.
+        if(!this.config.isSet("Blacklist")) {
+           return items;
+        }
+
+        // Get all items from the Blacklist.
+        for(final String material : this.config.getStringList("Blacklist")) {
+            items.add(Material.valueOf(material));
+        }
+
+        return items;
     }
 
     /**
