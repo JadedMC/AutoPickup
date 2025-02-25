@@ -25,7 +25,9 @@
 package net.jadedmc.autopickup.listeners;
 
 import net.jadedmc.autopickup.AutoPickupPlugin;
+import net.jadedmc.autopickup.utils.FoodUtils;
 import net.jadedmc.autopickup.utils.InventoryUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This listens to the EntityDeathEvent event, which is called every time an entity dies.
@@ -83,6 +86,22 @@ public class EntityDeathListener implements Listener {
         // Clear the list of dropped items.
         final Collection<ItemStack> drops = new ArrayList<>(event.getDrops());
         event.getDrops().clear();
+
+        // if auto-cook is enabled, all items are cooked and given to the player.
+        if (plugin.getConfigManager().getConfig().getBoolean("Settings.auto-cook")){
+            if (plugin.getConfigManager().getConfig().getBoolean("RequirePermission") && killer.hasPermission("autopickup.use.autocook")){
+                List<ItemStack> drop = new ArrayList<>(drops);
+                drop.replaceAll(itemStack -> {
+                    Material cookedMaterial = FoodUtils.getCookedVersion(itemStack.getType());
+                    if (cookedMaterial != null) {
+                        return new ItemStack(cookedMaterial, itemStack.getAmount());
+                    }
+                    return itemStack;
+                });
+                drops.clear();
+                drops.addAll(drop);
+            }
+        }
 
         // Adds the item caught to the player's inventory.
         final Collection<ItemStack> remaining = InventoryUtils.addItems(killer, drops);
